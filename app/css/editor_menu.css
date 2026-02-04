@@ -1,0 +1,54 @@
+.fancytree-title i {
+  margin-right: 6px;
+}
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 5px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.icon-item:hover {
+  background: #e9ecef;
+  border-color: #dee2e6;
+}
+.icon-item.selected {
+  background: #cfe2ff;
+  border-color: #0d6efd;
+}
+.icon-item i {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+.icon-item span {
+  font-size: 9px;
+  text-align: center;
+  word-break: break-all;
+  color: #666;
+}
+#iconSearch {
+  margin-bottom: 15px;
+}
+.icon-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #dee2e6;
+}
+.icon-pagination .page-info {
+  font-size: 14px;
+  color: #666;
+}

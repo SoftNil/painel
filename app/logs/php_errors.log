@@ -1,0 +1,131 @@
+[2026-01-15 05:03:52] Erro: session_start(): Ignoring session_start() because a session is already active (started from C:\wamp64\www\painel\app\admin\topo.php on line 2) em C:\wamp64\www\painel\app\funcoes.php na linha 32
+[2026-01-15 05:03:52] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:52] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:52] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:52] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:03:52] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:52] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:52] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:52] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:52] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:03:52] Erro: Undefined array key 5 em C:\wamp64\www\painel\app\funcoes.php na linha 15
+[2026-01-15 05:03:52] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:03:52] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:03:52] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:52] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:52] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:52] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:52] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:52] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:52] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:59] Erro: session_start(): Ignoring session_start() because a session is already active (started from C:\wamp64\www\painel\app\admin\topo.php on line 2) em C:\wamp64\www\painel\app\funcoes.php na linha 32
+[2026-01-15 05:03:59] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:59] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:59] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:59] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:03:59] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:59] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:59] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:59] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:03:59] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:03:59] Erro: Undefined array key 5 em C:\wamp64\www\painel\app\funcoes.php na linha 15
+[2026-01-15 05:03:59] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:03:59] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:03:59] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:59] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:59] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:59] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:59] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:59] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:03:59] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:01] Erro: session_start(): Ignoring session_start() because a session is already active (started from C:\wamp64\www\painel\app\admin\topo.php on line 2) em C:\wamp64\www\painel\app\funcoes.php na linha 32
+[2026-01-15 05:05:01] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:01] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:01] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:01] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:05:01] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:01] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:01] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:01] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:01] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:05:01] Erro: Undefined array key 5 em C:\wamp64\www\painel\app\funcoes.php na linha 15
+[2026-01-15 05:05:01] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:05:01] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:05:01] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:01] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:01] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:01] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:01] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:01] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:01] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:32] Erro: session_start(): Ignoring session_start() because a session is already active (started from C:\wamp64\www\painel\app\admin\topo.php on line 2) em C:\wamp64\www\painel\app\funcoes.php na linha 32
+[2026-01-15 05:05:32] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:32] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:32] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:32] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:05:32] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:32] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:32] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:32] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:32] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:05:32] Erro: Undefined array key 5 em C:\wamp64\www\painel\app\funcoes.php na linha 15
+[2026-01-15 05:05:32] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:05:32] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:05:32] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:32] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:32] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:32] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:32] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:32] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:32] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:54] Erro: session_start(): Ignoring session_start() because a session is already active (started from C:\wamp64\www\painel\app\admin\topo.php on line 2) em C:\wamp64\www\painel\app\funcoes.php na linha 32
+[2026-01-15 05:05:54] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:54] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:54] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:54] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:05:54] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:54] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:54] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:54] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:05:54] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:05:54] Erro: Undefined array key 5 em C:\wamp64\www\painel\app\funcoes.php na linha 15
+[2026-01-15 05:05:54] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:05:54] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:05:54] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:54] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:54] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:54] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:54] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:54] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:05:54] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:07:47] Erro: session_start(): Ignoring session_start() because a session is already active (started from C:\wamp64\www\painel\app\admin\topo.php on line 2) em C:\wamp64\www\painel\app\funcoes.php na linha 32
+[2026-01-15 05:07:47] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:07:47] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:07:47] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:07:47] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:07:47] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:07:47] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:07:47] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:07:47] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 82
+[2026-01-15 05:07:47] Erro: Undefined variable $target em C:\wamp64\www\painel\app\admin\topo.php na linha 76
+[2026-01-15 05:07:47] Erro: Undefined array key 5 em C:\wamp64\www\painel\app\funcoes.php na linha 15
+[2026-01-15 05:07:47] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:07:47] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 382
+[2026-01-15 05:07:47] Erro: Undefined array key "id_4" em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:07:47] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:07:47] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:07:47] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:07:47] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:07:47] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:07:47] Erro: Trying to access array offset on null em C:\wamp64\www\painel\app\admin\dados.php na linha 387
+[2026-01-15 05:18:57] Erro: Undefined array key "SERVER_NAME" em C:\wamp64\www\painel\app\conexao\conecta.php na linha 9
+[2026-01-15 05:18:57] Erro: Undefined array key "REQUEST_URI" em C:\wamp64\www\painel\app\conexao\conecta.php na linha 10
+[2026-01-15 05:18:57] Erro: Undefined array key "HTTP_HOST" em C:\wamp64\www\painel\app\conexao\detalhes_conexao.php na linha 11
+[15-Jan-2026 05:19:18 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Uma tentativa de conexão falhou porque o componente conectado não respondeu
+corretamente após um período de tempo ou a conexão estabelecida falhou
+porque o host conectado não respondeu in C:\wamp64\www\painel\app\conexao\conecta.php:15
+Stack trace:
+#0 C:\wamp64\www\painel\app\conexao\conecta.php(15): mysqli_connect('painel.softnil....', 'c1softnil', Object(SensitiveParameterValue))
+#1 Command line code(1): include('C:\\wamp64\\www\\p...')
+#2 {main}
+  thrown in C:\wamp64\www\painel\app\conexao\conecta.php on line 15

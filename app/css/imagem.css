@@ -1,0 +1,34 @@
+html,
+body {
+  min-height: 100%;
+  width: 100%;
+}
+.img-holder {
+  width: calc(100%);
+  height: 30vh;
+  background: black;
+}
+.img-holder img {
+  object-position: "";
+}
+.img-holder img {
+  width: calc(100%);
+  height: calc(100%);
+  object-fit: scale-down;
+  object-position: center center;
+}
+
+.imagems {
+  position: relative;
+  top: 10px;
+}
+
+.imagem-form {
+  display: none;
+  cursor: pointer;
+}
+.btn-deletar {
+  position: relative;
+  top: -260px;
+  left: 20px;
+}
