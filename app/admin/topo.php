@@ -21,7 +21,7 @@ while ($linha_4 = mysqli_fetch_assoc($sql_4)) {
     $descricao_4 = $linha_4['descricao_4'];
 }
 
-$sql = "SELECT * FROM menu_admin_5 ORDER BY parent_id_5, ordem_5, texto_5";
+$sql = "SELECT * FROM menu_5 WHERE nivel_5 = 'admin' ORDER BY parent_id_5, ordem_5, texto_5";
 $result = mysqli_query($conecta, $sql);
 
 $menus = [];

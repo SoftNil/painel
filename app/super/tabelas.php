@@ -75,6 +75,7 @@ while ($rowTabela = mysqli_fetch_array($queryTabelas)) {
         <thead>
             <tr>
                 <th>Nome</th>
+                <th style="width: 100px; text-align: center;">Registros</th>
                 <th style="width: 100px; text-align: center;">Visível</th>
             </tr>
         </thead>
@@ -83,6 +84,7 @@ while ($rowTabela = mysqli_fetch_array($queryTabelas)) {
                 <?php foreach ($tabelasParaListar as $item): ?>
                     <tr data-tabela="<?php echo $item['nome_bd']; ?>" data-coluna="<?php echo $item['coluna_chave']; ?>">
                         <td><?php echo htmlspecialchars($item['nome_exibicao']); ?></td>
+                         <td class="text-center"><a class="btn btn-sm btn-primary" href="<?php echo $dominio ?>/app/super/dados/<?php echo criptografa($item['nome_bd']); ?>" role="button"><i class="ri-list-view"></i></a></td>
                         <td class="checkbox-container">
                             <input type="checkbox" class="check-visible" 
                                 <?php echo $item['visible'] ? 'checked' : ''; ?>></br>

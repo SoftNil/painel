@@ -20,10 +20,19 @@ function criptografa($texto)
     return  base64_encode($texto);
 }
 
-
 function descriptografa($texto)
 {
-    return base64_decode($texto);
+    $decodificado = base64_decode($texto, true);
+
+    if ($decodificado === false) {
+        return false;
+    }
+
+    if (base64_encode($decodificado) !== $texto) {
+        return false;
+    }
+
+    return $decodificado;
 }
 
 

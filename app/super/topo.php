@@ -19,17 +19,18 @@ include 'action.php';
 $query_4 = "SELECT * FROM configuracoes_4";
 $sql_4 = mysqli_query($conecta, $query_4);
 while ($linha_4 = mysqli_fetch_assoc($sql_4)) {
+    $tabelas_4 = $linha_4['tabelas_4'];
     $titulo_4 = $linha_4['titulo_4'];
     $logo_4 = $linha_4['logo_4'];
     $descricao_4 = $linha_4['descricao_4'];
 }
 
-$sql = "SELECT * FROM menu_super_11 ORDER BY parent_id_11, ordem_11, texto_11";
+$sql = "SELECT * FROM menu_5 WHERE nivel_5 = 'super' ORDER BY parent_id_5, ordem_5, texto_5";
 $result = mysqli_query($conecta, $sql);
 
 $menus = [];
 while ($row = mysqli_fetch_assoc($result)) {
-    $menus[$row['parent_id_11']][] = $row;
+    $menus[$row['parent_id_5']][] = $row;
 }
 $menu_tipo = 'topo';
 //$menu_tipo = 'lateral simples';
@@ -69,20 +70,25 @@ $menu_tipo = 'topo';
                         <?php
                         if (isset($menus[0])) {
                             foreach ($menus[0] as $item) {
-                                $hasChildren = isset($menus[$item['id_11']]);
-                                $id_11 = $item['id_11'];
-                                $icone_11 = $item['icone_11'];
-                                $texto_11 = $item['texto_11'];
-                                $link_11 = $item['link_11'];
+                                $hasChildren = isset($menus[$item['id_5']]);
+                                $id_5 = $item['id_5'];
+                                $icone_5 = $item['icone_5'];
+                                $texto_5 = $item['texto_5'];
+                                $link_5 = $item['link_5'];
+
                                 if ($hasChildren) {
                                     echo '<li class="nav-item dropdown">';
-                                    echo '<a class="nav-link dropdown-toggle fw-bold link-body-emphasis" ' . $target . ' href="' . $link_11 . '" id="menu' . $id_11 . '" role="button" data-bs-toggle="dropdown">' . $icone_11 . ' ' . $texto_11 . '</a>';
+                                    echo '<a class="nav-link dropdown-toggle fw-bold link-body-emphasis" ' . $target . ' href="' . $link_5 . '" id="menu' . $id_5 . '" role="button" data-bs-toggle="dropdown">' . $icone_5 . ' ' . $texto_5 . '</a>';
 
-                                    montarMenu($id_11, $menus, $dominio);
+                                    montarMenu($id_5, $menus, $dominio);
 
                                     echo '</li>';
                                 } else {
-                                    echo '<li class="nav-item"> <a class="nav-link fw-bold link-body-emphasis" ' . $target . ' href="' . $link_11 . '">' . $icone_11 . ' ' . $texto_11 . ' </a></li>';
+                                    if (str_starts_with($link_5, '#')) {
+                                       echo '<li class="nav-item"> <a class="nav-link fw-bold link-body-emphasis" href=""' . $target . ' data-bs-toggle="modal" data-bs-target="' . $link_5 . '">' . $icone_5 . ' ' . $texto_5 . ' </a></li>';
+                                    } else {
+                                        echo '<li class="nav-item"> <a class="nav-link fw-bold link-body-emphasis" ' . $target . ' href="' . $link_5 . '">' . $icone_5 . ' ' . $texto_5 . ' </a></li>';
+                                    }
                                 }
                             }
                         }
@@ -90,7 +96,7 @@ $menu_tipo = 'topo';
                     </ul>
                     <div class="dropdown text-end">
                         <a href="#" class="d-block text-decoration-none dropdown-toggle nav-link link-body-emphasis" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                           <i class="ri-shield-user-line ri-1x"></i>
+                            <i class="ri-shield-user-line ri-1x"></i>
                             <strong>Administração</strong>
                         </a>
                         <?php include 'menu.php'; ?>
@@ -108,18 +114,18 @@ $menu_tipo = 'topo';
                     <?php
                     if (isset($menus[0])) {
                         foreach ($menus[0] as $item) {
-                            $hasChildren = isset($menus[$item['id_11']]);
-                            $id_11 = $item['id_11'];
-                            $icone_11 = $item['icone_11'];
-                            $texto_11 = $item['texto_11'];
-                            $link_11 = $item['link_11'];
+                            $hasChildren = isset($menus[$item['id_5']]);
+                            $id_5 = $item['id_5'];
+                            $icone_5 = $item['icone_5'];
+                            $texto_5 = $item['texto_5'];
+                            $link_5 = $item['link_5'];
                             if ($hasChildren) {
                                 echo '<li class="nav-item dropend">';
-                                echo '<a class="nav-link dropdown-toggle link-body-emphasis" ' . $target . ' href="' . $link_11 . '" id="menu' . $id_11 . '" role="button" data-bs-toggle="dropdown"><span style="font-size: 26px;" >' . $icone_11 .  '</span></a>';
-                                montarMenu($id_11, $menus, $dominio);
+                                echo '<a class="nav-link dropdown-toggle link-body-emphasis" ' . $target . ' href="' . $link_5 . '" id="menu' . $id_5 . '" role="button" data-bs-toggle="dropdown"><span style="font-size: 26px;" >' . $icone_5 .  '</span></a>';
+                                montarMenu($id_5, $menus, $dominio);
                                 echo '</li>';
                             } else {
-                                echo '<li> <a class="nav-link link-body-emphasis" style="font-size: 26px;" ' . $target . ' href="' . $link_11 . '">' . $icone_11 . ' </a></li>';
+                                echo '<li> <a class="nav-link link-body-emphasis" style="font-size: 26px;" ' . $target . ' href="' . $link_5 . '">' . $icone_5 . ' </a></li>';
                             }
                         }
                     }
@@ -131,7 +137,7 @@ $menu_tipo = 'topo';
                         <i class="ri-shield-user-line ri-2x"></i>
 
                     </a>
-                     <?php include 'menu.php'; ?>
+                    <?php include 'menu.php'; ?>
                 </div>
             </div>
         <?php }
@@ -143,18 +149,18 @@ $menu_tipo = 'topo';
 
                     if (isset($menus[0])) {
                         foreach ($menus[0] as $item) {
-                            $hasChildren = isset($menus[$item['id_11']]);
-                            $id_11 = $item['id_11'];
-                            $icone_11 = $item['icone_11'];
-                            $texto_11 = $item['texto_11'];
-                            $link_11 = $item['link_11'];
+                            $hasChildren = isset($menus[$item['id_5']]);
+                            $id_5 = $item['id_5'];
+                            $icone_5 = $item['icone_5'];
+                            $texto_5 = $item['texto_5'];
+                            $link_5 = $item['link_5'];
                             if ($hasChildren) {
                                 echo '<li class="nav-item dropend">';
-                                echo '<a class="nav-link dropdown-toggle fw-bold link-body-emphasis"  ' . $target . ' href="' . $link_11 . '" id="menu' . $id_11 . '" role="button" data-bs-toggle="dropdown">' . $icone_11 . ' ' . $texto_11 . '</a>';
-                                montarMenu($id_11, $menus, $dominio);
+                                echo '<a class="nav-link dropdown-toggle fw-bold link-body-emphasis"  ' . $target . ' href="' . $link_5 . '" id="menu' . $id_5 . '" role="button" data-bs-toggle="dropdown">' . $icone_5 . ' ' . $texto_5 . '</a>';
+                                montarMenu($id_5, $menus, $dominio);
                                 echo '</li>';
                             } else {
-                                echo '<li class="nav-item"> <a class="nav-link link-body-emphasis fw-bold" ' . $target . ' href="' . $link_11 . '">' . $icone_11 . ' ' . $texto_11 . ' </a></li>';
+                                echo '<li class="nav-item"> <a class="nav-link link-body-emphasis fw-bold" ' . $target . ' href="' . $link_5 . '">' . $icone_5 . ' ' . $texto_5 . ' </a></li>';
                             }
                         }
                     }
@@ -162,10 +168,10 @@ $menu_tipo = 'topo';
                 </ul>
                 <div class="dropend">
                     <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="ri-shield-user-line ri-1x me-1"></i> 
+                        <i class="ri-shield-user-line ri-1x me-1"></i>
                         <strong>Administração</strong>
                     </a>
-                     <?php include 'menu.php'; ?>
+                    <?php include 'menu.php'; ?>
                 </div>
             </div>
         <?php } ?>
