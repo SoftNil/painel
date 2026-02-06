@@ -1,38 +1,56 @@
 <?php
 include '../conexao/conecta.php';
 
-// Recebendo dados via POST
+// Definir cabeçalho como JSON para o Ajax entender corretamente
+header('Content-Type: application/json');
+
+ $resposta = array();
+
+// --- LÓGICA 1: DELETAR TABELA ---
+if (isset($_POST['tb'])) {
+    $tb = $_POST['tb'];
+
+    // CORREÇÃO 1: Usar crases `` ` `` em vez de aspas simples ' '
+    // O IF EXISTS já trata o caso da tabela não existir, então o check de colunas anterior era desnecessário.
+    $sql = "DROP TABLE IF EXISTS `$tb`";
+
+    if (mysqli_query($conecta, $sql)) {
+        $resposta = array('success' => true, 'message' => 'Tabela ' . $tb . ' deletada com sucesso!');
+    } else {
+        $resposta = array('success' => false, 'message' => 'Erro SQL: ' . mysqli_error($conecta));
+    }
+
+    // CORREÇÃO 2: Dar exit para parar o script aqui e não executar o resto do código
+    echo json_encode($resposta);
+    exit;
+}
+
+// --- LÓGICA 2: ATUALIZAR VISIBILIDADE DA COLUNA ---
+// Só executa se não for deleção de tabela
  $tabela = isset($_POST['tabela']) ? $_POST['tabela'] : '';
  $coluna = isset($_POST['coluna']) ? $_POST['coluna'] : '';
  $visibleValue = isset($_POST['visible']) && $_POST['visible'] === 'true' ? 'true' : 'false';
 
- $resposta = array('status' => 'erro', 'mensagem' => 'Dados inválidos.');
-
 if ($tabela && $coluna) {
-    // 1. Obter informações completas da coluna atual para não perder definições (Type, Null, Default, etc)
+    // 1. Obter informações completas da coluna atual
     $queryColuna = mysqli_query($conecta, "SHOW FULL COLUMNS FROM `$tabela` WHERE Field = '$coluna'");
-    
+
     if ($queryColuna && mysqli_num_rows($queryColuna) > 0) {
         $dadosColuna = mysqli_fetch_assoc($queryColuna);
         $comentarioAtual = $dadosColuna['Comment'];
-        
+
         // 2. Atualizar a string do comentário
-        // Substitui visible=true ou visible=false pelo novo valor
         $novoComentario = preg_replace('/\bvisible=(true|false)\b/i', 'visible=' . $visibleValue, $comentarioAtual);
-        
-        // Se por algum motivo o preg_replace falhar (ex: string muito estranha), mantemos o atual para não quebrar
+
         if ($novoComentario === null) {
             $novoComentario = $comentarioAtual;
         }
 
-        // 3. Montar a definição da coluna para o ALTER TABLE
-        // É necessário reconstruir a definição (tipo, nulo, extra, etc) pois o ALTER TABLE MODIFY exige isso
+        // 3. Montar a definição da coluna
         $tipo = $dadosColuna['Type'];
         $nulo = ($dadosColuna['Null'] === 'NO') ? 'NOT NULL' : 'NULL';
-        $chave = ($dadosColuna['Key'] === 'PRI') ? 'PRIMARY KEY' : ''; // Cuidado ao alterar PK
-        $extra = $dadosColuna['Extra']; // Ex: auto_increment
+        $extra = $dadosColuna['Extra']; 
         
-        // Tratar valor padrão se existir
         $padrao = '';
         if ($dadosColuna['Default'] !== null) {
             $padrao = "DEFAULT '" . mysqli_real_escape_string($conecta, $dadosColuna['Default']) . "'";
@@ -40,25 +58,21 @@ if ($tabela && $coluna) {
             $padrao = "DEFAULT NULL";
         }
 
-        // Escapar o comentário para evitar SQL Injection e quebras de string
         $comentarioEscapado = mysqli_real_escape_string($conecta, $novoComentario);
 
         // 4. Construir e executar o SQL
-        // Ex: ALTER TABLE `Configurações` MODIFY COLUMN `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '...'
         $sql = "ALTER TABLE `$tabela` MODIFY COLUMN `$coluna` $tipo $nulo $padrao $extra COMMENT '$comentarioEscapado'";
-        
-        // Nota: Se a coluna for Primary Key, alguns bancos exigem remoção da PK antes de alterar, 
-        // mas geralmente para comments de campos int auto_increment funciona direto.
-        // Se der erro de sintaxe SQL, pode ser necessário ajustar a string de definição acima.
-        
+
         if (mysqli_query($conecta, $sql)) {
-            $resposta = array('status' => 'sucesso', 'mensagem' => 'Visibilidade atualizada.');
+            $resposta = array('success' => true, 'message' => 'Visibilidade atualizada.');
         } else {
-            $resposta = array('status' => 'erro', 'mensagem' => 'Erro SQL: ' . mysqli_error($conecta));
+            $resposta = array('success' => false, 'message' => 'Erro SQL: ' . mysqli_error($conecta));
         }
     } else {
-        $resposta = array('status' => 'erro', 'mensagem' => 'Coluna não encontrada.');
+        $resposta = array('success' => false, 'message' => 'Coluna não encontrada.');
     }
+} else {
+    $resposta = array('success' => false, 'message' => 'Dados inválidos (tabela ou coluna faltando).');
 }
 
 echo json_encode($resposta);

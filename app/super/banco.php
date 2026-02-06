@@ -1,6 +1,6 @@
 <?php
 include 'topo.php';
-
+$link = $dominio . '/app/' . $_SESSION['nivel'];
 // --- DADOS INICIAIS ---
 $todas_tabelas = [];
 $lista_tabelas_raw = mysqli_query($conecta, "SHOW TABLES");
@@ -28,7 +28,6 @@ if ($lista_tabelas_raw) {
         }
     }
 }
-
 
 $proximo_id = $tabelas_4 + 1;
 
@@ -145,120 +144,107 @@ if (!empty($tabela_nome)) {
                 </div>
 
                 <div class="card shadow mb-5">
-                    <div class="card-body text-center py-5">
+                    <div class="card-body text-center">
+
                         <h2 class="mb-3">Criar Nova Tabela</h2>
-                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalTabela" title="Ativar e desativar edição Tabelas"><i class="ri-table-2"></i> Tabelas</button>
                         <div class="row g-3 mt-4">
                             <div class="col-12">
+                               
                                 <div class="border rounded p-4 h-100 dashboard-card" onclick="document.getElementById('newTableNameInput').focus()">
                                     <i class="ri-add-circle-line display-4 text-success d-block mb-3"></i>
                                     <div class="input-group mt-3">
                                         <span class="input-group-text">Nome Base</span>
                                         <input type="text" id="newTableNameInput" class="form-control" placeholder="ex: usuarios" onkeypress="handleEnterNewTable(event)">
                                         <button class="btn btn-success" onclick="goToNewTable()">Criar</button>
-
                                     </div>
-                                    <small class="text-muted mt-2 d-block">Nome final: <strong id="previewName">usuarios_<?php echo $proximo_id; ?></strong></small>
+                                    <small class="text-muted mt-2 mb-2 d-block">Nome final: <strong id="previewName">usuarios_<?php echo $proximo_id; ?></strong></small>
+                                    <h2 class="mb-3">Editar Tabelas</h2>
+                                      <div id="menssagem_tabela"></div>
+                                    <?php 
+                                    if ($_SESSION['nivel'] == 'super') {
+                                    include 'tabelas.php'; 
+                                    
+                                    }
+
+                                    if ($_SESSION['nivel'] != 'super') {
+                                    if (count($todas_tabelas) == 0): ?>
+                                        <div class="text-center text-muted py-3">Nenhuma tabela visível encontrada.</div>
+                                    <?php else: ?>
+                                        <select class="form-select" id="existingTableSelect" onchange="goToEditTable(this.value)">
+                                            <option value="" selected disabled>Selecione uma tabela...</option>
+                                            <?php foreach ($todas_tabelas as $t): ?>
+                                                <option value="<?php echo $t; ?>"><?php echo $t; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    <?php endif; }?>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-header">Tabelas Disponíveis (visible=true)</div>
-                    <div class="card-body">
-                        <?php if (count($todas_tabelas) == 0): ?>
-                            <div class="text-center text-muted py-3">Nenhuma tabela visível encontrada.</div>
-                        <?php else: ?>
-                            <select class="form-select" id="existingTableSelect" onchange="goToEditTable(this.value)">
-                                <option value="" selected disabled>Selecione uma tabela...</option>
-                                <?php foreach ($todas_tabelas as $t): ?>
-                                    <option value="<?php echo $t; ?>"><?php echo $t; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    <?php else: ?>
-        <!-- ================= TELA 2: EDITOR ================= -->
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">
-                            <i class="ri-settings-4-line"></i>
-                            <?php echo $mode_new ? 'Nova Tabela' : 'Editando: '; ?>
-                            <strong><?php echo htmlspecialchars($tabela_nome); ?></strong>
-                        </h5>
-                        <a href="?" class="btn btn-outline-secondary btn-sm">
-                            <i class="ri-arrow-go-back-line"></i> Voltar
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Nome da Tabela</label>
-                            <input type="text" id="tableName" class="form-control" value="<?php echo htmlspecialchars($tabela_nome); ?>" readonly>
-                        </div>
-                        <div id="columnsContainer"></div>
-                        <button class="btn btn-primary w-100 mt-3" id="btnAddColumn">
-                            <i class="ri-add-circle-line"></i> Adicionar Coluna
-                        </button>
-                    </div>
-                </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="card shadow-sm sticky-top" style="top: 20px;">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="ri-code-s-slash-line"></i> SQL</h5>
-                        <span class="badge bg-secondary" id="modeBadge"><?php echo $mode_new ? 'CREATE' : 'ALTER'; ?></span>
-                    </div>
-                    <div class="card-body bg-secondary-subtle">
-                        <div class="code-container" id="sqlOutput">-- Aguarde...</div>
-
-                        <div class="mt-2">
-                            <button class="btn btn-danger w-100 mb-1" id="btnExec" data-bs-toggle="modal" data-bs-target="#modalExecutarSQL" title="Executar SQL no Banco de Dados">
-                                <i class="ri-play-circle-line"></i> Executar no Banco
-                            </button>
-                            <button class="btn btn-success w-100" title="Copiar SQL para memória" id="btnCopy"><i class="ri-file-copy-line"></i> Copiar SQL</button>
-                            <div id="execFeedback" class="alert mt-2 p-1 small d-none text-center"></div>
-                            <div class="toast-container position-relative mt-1 text-center w-100">
-                                <div id="liveToast" class="toast align-items-center bg-success border-0 w-100" role="alert">
-                                    <div class="d-flex">
-                                        <div class="toast-body text-center w-100">SQL copiado!</div>
-                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
+           
 </div>
 
-<!-- MODAL DE GERENCIAMENTO DE GRUPO -->
-<div class="modal fade" id="modalTabela" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold text-primary">Configuração de Visibilidade</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<?php else: ?>
+    <!-- ================= TELA 2: EDITOR ================= -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="ri-settings-4-line"></i>
+                        <?php echo $mode_new ? 'Nova Tabela' : 'Editando: '; ?>
+                        <strong><?php echo htmlspecialchars($tabela_nome); ?></strong>
+                    </h5>
+                    <a href="?" class="btn btn-outline-secondary btn-sm">
+                        <i class="ri-arrow-go-back-line"></i> Voltar
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nome da Tabela</label>
+                        <input type="text" id="tableName" class="form-control" value="<?php echo htmlspecialchars($tabela_nome); ?>" readonly>
+                    </div>
+                    <div id="columnsContainer"></div>
+                    <button class="btn btn-primary w-100 mt-3" id="btnAddColumn">
+                        <i class="ri-add-circle-line"></i> Adicionar Coluna
+                    </button>
+                </div>
             </div>
-            <div class="modal-body">
-                <?php include 'tabelas.php'; ?>
-            </div>
-            <div class="modal-footer justify-content-end">
-                <button type="button" class="btn btn-danger me-2" data-bs-dismiss="modal">Fechar</button>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm sticky-top" style="top: 20px;">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="ri-code-s-slash-line"></i> SQL</h5>
+                    <span class="badge bg-secondary" id="modeBadge"><?php echo $mode_new ? 'CREATE' : 'ALTER'; ?></span>
+                </div>
+                <div class="card-body bg-secondary-subtle">
+                    <div class="code-container" id="sqlOutput">-- Aguarde...</div>
+
+                    <div class="mt-2">
+                        <button class="btn btn-danger w-100 mb-1" id="btnExec" data-bs-toggle="modal" data-bs-target="#modalExecutarSQL" title="Executar SQL no Banco de Dados">
+                            <i class="ri-play-circle-line"></i> Executar no Banco
+                        </button>
+                        <button class="btn btn-success w-100" title="Copiar SQL para memória" id="btnCopy"><i class="ri-file-copy-line"></i> Copiar SQL</button>
+                        <div id="execFeedback" class="alert mt-2 p-1 small d-none text-center"></div>
+                        <div class="toast-container position-relative mt-1 text-center w-100">
+                            <div id="liveToast" class="toast align-items-center bg-success border-0 w-100" role="alert">
+                                <div class="d-flex">
+                                    <div class="toast-body text-center w-100">SQL copiado!</div>
+                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
+<?php endif; ?>
 </div>
 
 <!-- MODAL DE GERENCIAMENTO DE GRUPO -->
@@ -328,8 +314,8 @@ if (!empty($tabela_nome)) {
                 <p class="mb-0">A acão não podem desfeita. Os registros deletados não poderão ser recuperadas.</p>
             </div>
             <div class="modal-footer flex-nowrap p-0 text-center">
-                <div id="btnDeleteDados"></div>
-                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 me-5 rounded-0 btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                <div id="btnDeleteTabelas"></div>
+                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 me-5 rounded-0 btn-cancelar" data-bs-target="#modalTabela" data-bs-toggle="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -362,6 +348,55 @@ if (!empty($tabela_nome)) {
     function goToEditTable(nome) {
         if (nome) window.location.href = '?tabela=' + encodeURIComponent(nome);
     }
+
+    $(document).on('click', '.btn-deletarTabela', function() {
+        let tb = $(this).data('tb');
+        $('#btnDeleteTabelas').html('<button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right btnExcluirTabelas" data-tb="' + tb + '" title="Excluir"><strong>Excluír</strong></button>');
+
+    });
+
+            $(document).on('click', '.btnExcluirTabelas', function() {
+
+            let tb = $(this).data('tb');
+            $.ajax({
+                url: 'atualiza_visibilidade.php',
+                type: 'POST',
+                data: {
+                    tb: tb
+                },
+                // Adicione dataType: json para garantir que o jQuery entenda a resposta
+                dataType: 'json', 
+                success: function(resp) {
+                    $('#modalDeleteTabela').modal('hide');
+                    
+                    // Verifica se foi sucesso ou erro baseado na resposta do PHP
+                    let tipoAlerta = resp.success ? 'alert-success' : 'alert-danger';
+                    let icone = resp.success ? '<i class="ri-check-fill"></i>' : '<i class="ri-error-warning-line"></i>';
+                    let titulo = resp.success ? '<strong> Sucesso </strong>' : '<strong> Erro </strong>';
+
+                    $('#menssagem_tabela').html('<div class="alert ' + tipoAlerta + ' alert-dismissible fade show" id="alertAuto" role="alert">' + icone + titulo + ' ' + resp.message + '</div>');
+                    
+                    if (resp.success) {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#modalDeleteTabela').modal('hide');
+                    $('#menssagem_tabela').html('<div class="alert alert-danger alert-dismissible fade show" id="alertAuto" role="alert"><i class="ri-error-warning-line"></i><strong> Erro de Comunicação </strong> Tente novamente.</div>');
+                    console.error(error);
+                }
+            });
+
+            // ... resto do código para fechar o alerta ...
+        setTimeout(function() {
+            $('#alertAuto').fadeOut(400, function() {
+                $(this).remove();
+            });
+        }, 5000);
+
+    });
 </script>
 
 <!-- Script do Editor -->

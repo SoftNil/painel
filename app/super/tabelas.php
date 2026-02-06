@@ -63,9 +63,6 @@ while ($rowTabela = mysqli_fetch_array($queryTabelas)) {
 
 
     <style>
-       
-       
-
         .checkbox-container { text-align: center; }
         input[type="checkbox"] { transform: scale(1.5); cursor: pointer; }
         .status-msg { margin-left: 10px; font-size: 0.9em; color: green; display: none; }
@@ -91,7 +88,7 @@ while ($rowTabela = mysqli_fetch_array($queryTabelas)) {
                         </td>
                         <td class="text-center">
                             <a class="btn btn-sm btn-warning" title="Editar" href="<?php echo $dominio ?>/app/super/dados/<?php echo criptografa($item['nome_bd']); ?>" role="button"><i class="ri-pencil-fill"></i></a>
-                        <button class="btn btn-sm btn-danger btn-deletarTabela ms-1" data-id="<?= $r[$pk] ?>" data-bs-toggle="modal" data-bs-target="#modalDeleteTabela" title="Excluir"><i class="ri-delete-bin-7-fill"></i></button>
+                        <button class="btn btn-sm btn-danger btn-deletarTabela ms-1" data-tb="<?= $item['nome_exibicao'] ?>" data-bs-toggle="modal" data-bs-target="#modalDeleteTabela" title="Excluir"><i class="ri-delete-bin-7-fill"></i></button>
                     </td>
                     
                     </tr>
@@ -105,7 +102,7 @@ while ($rowTabela = mysqli_fetch_array($queryTabelas)) {
     </table>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="<?php echo $dominio ?>/app/plugins/js/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.check-visible').change(function() {
@@ -144,4 +141,6 @@ while ($rowTabela = mysqli_fetch_array($queryTabelas)) {
                 });
             });
         });
+
+       
     </script>
