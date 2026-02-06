@@ -75,21 +75,25 @@ while ($rowTabela = mysqli_fetch_array($queryTabelas)) {
         <thead>
             <tr>
                 <th>Nome</th>
-                <th style="width: 100px; text-align: center;">Registros</th>
                 <th style="width: 100px; text-align: center;">Visível</th>
+                <th style="width: 100px; text-align: center;">Ações</th>
             </tr>
         </thead>
         <tbody>
             <?php if (count($tabelasParaListar) > 0): ?>
                 <?php foreach ($tabelasParaListar as $item): ?>
                     <tr data-tabela="<?php echo $item['nome_bd']; ?>" data-coluna="<?php echo $item['coluna_chave']; ?>">
-                        <td><?php echo htmlspecialchars($item['nome_exibicao']); ?></td>
-                         <td class="text-center"><a class="btn btn-sm btn-primary" href="<?php echo $dominio ?>/app/super/dados/<?php echo criptografa($item['nome_bd']); ?>" role="button"><i class="ri-list-view"></i></a></td>
+                        <td><?php echo htmlspecialchars($item['nome_exibicao']); ?></td>                       
                         <td class="checkbox-container">
                             <input type="checkbox" class="check-visible" 
                                 <?php echo $item['visible'] ? 'checked' : ''; ?>></br>
                             <span class="status-msg">Salvo!</span>
                         </td>
+                        <td class="text-center">
+                            <a class="btn btn-sm btn-warning" title="Editar" href="<?php echo $dominio ?>/app/super/dados/<?php echo criptografa($item['nome_bd']); ?>" role="button"><i class="ri-pencil-fill"></i></a>
+                        <button class="btn btn-sm btn-danger btn-deletarTabela ms-1" data-id="<?= $r[$pk] ?>" data-bs-toggle="modal" data-bs-target="#modalDeleteTabela" title="Excluir"><i class="ri-delete-bin-7-fill"></i></button>
+                    </td>
+                    
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -99,6 +103,7 @@ while ($rowTabela = mysqli_fetch_array($queryTabelas)) {
             <?php endif; ?>
         </tbody>
     </table>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

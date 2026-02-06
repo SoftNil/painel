@@ -318,7 +318,22 @@ if (!empty($tabela_nome)) {
     </div>
 </div>
 
+<div class="modal fade" id="modalDeleteTabela" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-body p-4 text-center">
 
+                <h5 class="mb-0">Deseja mesmo excluír este registro?</h5>
+
+                <p class="mb-0">A acão não podem desfeita. Os registros deletados não poderão ser recuperadas.</p>
+            </div>
+            <div class="modal-footer flex-nowrap p-0 text-center">
+                <div id="btnDeleteDados"></div>
+                <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 me-5 rounded-0 btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php include 'rodape.php'; ?>
 
@@ -1354,7 +1369,7 @@ if (!empty($tabela_nome)) {
                     if (pkCol) lines.push(`PRIMARY KEY (\`${pkCol.name}\`)`);
 
                     NumTabelas = `UPDATE \`configuracoes_4\` SET \`tabelas_4\` = ${nextNum} WHERE \`id_4\` = 1;\n`;
-                    sql =  NumTabelas +`CREATE TABLE \`${tableName}\` (\n  ${lines.join(',\n  ')}\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`;
+                    sql = NumTabelas + `CREATE TABLE \`${tableName}\` (\n  ${lines.join(',\n  ')}\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`;
                 } else {
                     let drops = [],
                         alters = [];

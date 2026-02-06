@@ -1,7 +1,4 @@
-  <?php
-    include 'verifica_nivel.php';
-    include 'funcoes.php';
-    ?>
+
   <script src="<?php echo $dominio ?>/app/plugins/js/jquery-3.7.1.min.js"></script>
   <script src="<?php echo $dominio ?>/app/plugins/croppie/croppie.js"></script>
 

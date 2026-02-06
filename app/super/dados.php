@@ -225,6 +225,13 @@ if ($tabela != false) {
                         case 'data_hora':
                             $valor = dataPBancoTime($valor);
                             break;
+                        // ADICIONADO: Verifica se é senha e faz o hash
+                        case 'senha':
+                            // Só faz o hash se o valor não estiver vazio
+                            if (!empty($valor)) {
+                                $valor = password_hash($valor, PASSWORD_DEFAULT);
+                            }
+                            break;
                     }
                 }
 
@@ -258,7 +265,20 @@ if ($tabela != false) {
 
                 $set = [];
                 foreach ($dados as $c => $v) {
+
+                    // --- ADICIONE ESTE BLOCO ---
+                    // Se for senha e o valor estiver vazio, ignore na atualização (mantém a senha atual)
+                    if (($modo[$c] ?? '') == 'cm' && isset($cm[$c]['cmascara']) && $cm[$c]['cmascara'] == 'senha' && $v === '') {
+                        continue;
+                    }
+                    // ----------------------------
                     $set[] = "$c='$v'";
+                }
+
+                // Se não houver nada para atualizar (ex: apenas senha vazia), evita erro de SQL
+                if (empty($set)) {
+                    echo json_encode(['status' => 'ok']);
+                    exit;
                 }
 
                 $sql = "UPDATE $tabela SET " . implode(',', $set) . " WHERE $pk='$id'";
@@ -395,6 +415,10 @@ if ($tabela != false) {
                                             echo '<td class="text-center">' . $r[$c] . '</td>';
                                         } elseif ($cm[$c]['cmascara'] == 'escolha') {
                                             echo '<td class="text-center">' . $r[$c] . '</td>';
+                                        } elseif ($cm[$c]['cmascara'] == 'senha') {
+                                            if  ($r[$c] != ''){
+                                            echo '<td class="text-center"><i class="ri-key-fill"></i> <i class="ri-lock-2-fill"></i></td>';
+                                            }else{ echo '<td></td>';}
                                         } elseif ($cm[$c]['cmascara'] == 'imagem') {
                                             echo '<td class="text-center"><img src="' . imgExiste($dominio, '/app/imagens/uploads/', $r[$c]) . '" alt="" height="30"></td>';
                                         } elseif ($cm[$c]['cmascara'] == 'normal') {
@@ -521,18 +545,18 @@ if ($tabela != false) {
                     </ul>
                 </nav>
             </div>
-
         </div>
 
-        <div class="modal fade" id="modalForm">
-            <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable ">
+
+        <div class="modal fade" id="modalForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                 <div class="modal-content">
-                    <form id="formCrud">
-                        <div class="modal-header">
-                            <h5><?php echo $labeltabela; ?></h5>
-                            <div id="menssagem_salvar" class="text-center me-5 ms-5 w-100" style="position: relative; top: -8px; margin-bottom: -30px;"></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel"><?php echo $labeltabela; ?></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formCrud">
                             <div class="row g-3">
                                 <?php
                                 foreach ($campos as $c) {
@@ -560,7 +584,7 @@ if ($tabela != false) {
                                         <div class="col-md-6">
                                             <label for="<?php echo $c; ?>" class="form-label"><?php echo $label; ?></label>
                                             <select name="<?php echo $c; ?>" id="<?php echo $c; ?>" class="form-select" <?php echo !$nulls[$c] ? 'required' : ''; ?>>
-                                                <option value="">Selecione...</option>
+                                                <option value="0">Selecione...</option>
                                                 <?php
                                                 if (isset($fkData[$c])) {
                                                     foreach ($fkData[$c] as $op) {
@@ -644,8 +668,7 @@ if ($tabela != false) {
                                                 <input type="datetime" name="<?php echo $c; ?>" id="<?php echo $c; ?>" class="form-control <?php echo $cm[$c]['cmascara'] ?? ''; ?>" <?php echo !$nulls[$c] ? 'required' : ''; ?>>
 
                                             <?php } elseif ($isSenha) { ?>
-                                                <input type="password" name="<?php echo $c; ?>" id="<?php echo $c; ?>" class="form-control <?php echo $cm[$c]['cmascara'] ?? ''; ?>" <?php echo !$nulls[$c] ? 'required' : ''; ?>>
-
+                                                <input type="password" name="<?php echo $c; ?>" id="<?php echo $c; ?>" class="form-control <?php echo $cm[$c]['cmascara'] ?? ''; ?>" autocomplete="new-password" placeholder="Deixe vazio para manter a atual" <?php echo !$nulls[$c] ? 'required' : ''; ?>>
                                             <?php } else { ?>
                                                 <!-- Inputs padrão (text, number, date) -->
                                                 <input type="text" name="<?php echo $c; ?>" id="<?php echo $c; ?>" class="form-control <?php echo $cm[$c]['cmascara'] ?? ''; ?>" <?php echo !$nulls[$c] ? 'required' : ''; ?>>
@@ -655,11 +678,12 @@ if ($tabela != false) {
                                 }
                                 ?>
                             </div>
-                        </div>
-                        <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button class="btn btn-primary" type="button" onclick="salvarAjax()">Salvar</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary" type="button" onclick="salvarAjax()">Salvar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -685,6 +709,7 @@ if ($tabela != false) {
     }
 }
 ?>
+
 <script src="<?php echo $dominio ?>/app/plugins/js/mask/masks.js"></script>
 
 <script>
@@ -777,9 +802,12 @@ if ($tabela != false) {
                             valorFinal = formatarData(valorFinal);
                         <?php } elseif ($classes[$c] == 'data_hora') { ?>
                             valorFinal = formatarDataHora(valorFinal);
-                        <?php } ?>
 
-                        element<?php echo $c; ?>.value = valorFinal;
+                        <?php } elseif (isset($cm[$c]['cmascara']) && $cm[$c]['cmascara'] == 'senha') { ?>
+                            element<?php echo $c; ?>.value = '';
+                        <?php } else { ?>
+                            element<?php echo $c; ?>.value = valorFinal;
+                        <?php } ?>
                     }
 
                     <?php if (isset($cm[$c]['cmascara']) && $cm[$c]['cmascara'] === 'imagem') { ?>
