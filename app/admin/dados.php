@@ -49,16 +49,16 @@ if ($tabela != false) {
     $modo     = [];
 
     $qTabelas = mysqli_query($conecta, "SHOW TABLES LIKE '$tabela'");
-     $total_tabelas = mysqli_num_rows($qTabelas);
+    $total_tabelas = mysqli_num_rows($qTabelas);
 
-   
-     if ($total_tabelas == 0) {
+
+    if ($total_tabelas == 0) {
         echo '<div class="alert alert-danger" role="alert" data-pg-collapsed>
               <h1><i class="ri-error-warning-line"></i> Tabela não encontrada.</h1>
             </div>';
     }
     if ($total_tabelas != 0) {
-         $qCampos = mysqli_query($conecta, "SHOW FULL COLUMNS FROM $tabela");
+        $qCampos = mysqli_query($conecta, "SHOW FULL COLUMNS FROM $tabela");
         while ($c = mysqli_fetch_assoc($qCampos)) {
             $campo = $c['Field'];
 
@@ -680,220 +680,220 @@ if ($tabela != false) {
                 </div>
             </div>
         </div>
-        <?php
-        include '../imagem.php';
-        ?>
-        <script src="<?php echo $dominio ?>/app/plugins/js/mask/masks.js"></script>
-
-        <script>
-            const modalEl = document.getElementById('modalForm');
-            modalEl.addEventListener('show.bs.modal', function(event) {
-                if (!modalEl.classList.contains('editando')) {
-                    const inputs = modalEl.querySelectorAll('input, textarea, select');
-                    inputs.forEach(el => {
-                        if (el.type === 'checkbox') {
-                            el.checked = false;
-                        } else if (el.type === 'radio') {
-                            el.checked = false;
-                        } else {
-                            el.value = '';
-                        }
-                    });
-                    const previews = modalEl.querySelectorAll('img[id^="preview_"]');
-                    previews.forEach(img => {
-                        img.src = '<?php echo $dominio; ?>/app/imagens/site/sem_imagem.png';
-                        img.style.display = 'none';
-                    });
-                    document.getElementById('<?php echo $pk; ?>').value = '';
-                }
-                modalEl.classList.remove('editando');
-            });
-
-            function editar(d) {
-                modalEl.classList.add('editando');
-                const inputs = modalEl.querySelectorAll('input, textarea, select');
-                inputs.forEach(el => {
-                    if (el.type === 'checkbox') {
-                        el.checked = false;
-                    } else if (el.type === 'radio') {
-                        el.checked = false;
-                    } else {
-                        el.value = '';
-                    }
-                });
-                <?php foreach ($campos as $c) { ?>
-                    <?php if (isset($cm[$c]['cmascara']) && $cm[$c]['cmascara'] == 'escolha') { ?>
-
-                        const radios<?php echo $c; ?> = document.getElementsByName('<?php echo $c; ?>');
-                        const valorRadio<?php echo $c; ?> = d['<?php echo $c; ?>'] || '';
-
-                        for (let i = 0; i < radios<?php echo $c; ?>.length; i++) {
-                            if (radios<?php echo $c; ?>[i].value === valorRadio<?php echo $c; ?>) {
-                                radios<?php echo $c; ?>[i].checked = true;
-                                break;
-                            }
-                        }
-
-                    <?php } else { ?>
-                        const element<?php echo $c; ?> = document.getElementById('<?php echo $c; ?>');
-
-                        if (element<?php echo $c; ?>) {
-                            if (element<?php echo $c; ?>.type === 'checkbox') {
-                                element<?php echo $c; ?>.checked = d['<?php echo $c; ?>'] == 1;
-                            } else {
-
-                                function formatarMoeda(valor) {
-                                    let str = valor;
-                                    if (typeof str !== 'string') return str;
-                                    return str.replace(/\./g, ',');
-                                }
-
-                                function formatarData(valor) {
-                                    let str = valor;
-                                    if (typeof str !== 'string') return str;
-                                    const partes = str.split('-');
-                                    if (partes.length !== 3) return str;
-                                    return `${partes[2].padStart(2, '0')}/${partes[1].padStart(2, '0')}/${partes[0]}`;
-                                }
-
-                                function formatarDataHora(valor) {
-                                    let str = valor;
-                                    if (typeof str !== 'string') return str;
-                                    const [data, hora] = str.split(' ');
-                                    const partes = data.split('-');
-                                    if (partes.length !== 3) return str;
-                                    return `${partes[2].padStart(2, '0')}/${partes[1].padStart(2, '0')}/${partes[0]} ${hora || ''}`;
-                                }
-
-                                let valorFinal = d['<?php echo $c; ?>'] || '';
-
-                                <?php if ($classes[$c] == 'money') { ?>
-                                    valorFinal = formatarMoeda(valorFinal);
-                                <?php } elseif ($classes[$c] == 'money2') { ?>
-                                    valorFinal = formatarMoeda(valorFinal);
-                                <?php } elseif ($classes[$c] == 'data') { ?>
-                                    valorFinal = formatarData(valorFinal);
-                                <?php } elseif ($classes[$c] == 'data_hora') { ?>
-                                    valorFinal = formatarDataHora(valorFinal);
-                                <?php } ?>
-
-                                element<?php echo $c; ?>.value = valorFinal;
-                            }
-
-                            <?php if (isset($cm[$c]['cmascara']) && $cm[$c]['cmascara'] === 'imagem') { ?>
-                                const preview<?php echo $c; ?> = document.getElementById('preview_<?php echo $c; ?>');
-
-                                if (preview<?php echo $c; ?>) {
-                                    const val = d['<?php echo $c; ?>'] || '';
-                                    if (val) {
-                                        preview<?php echo $c; ?>.src = '<?php echo  $dominio; ?>/app/imagens/uploads/' + val;
-                                        preview<?php echo $c; ?>.style.display = 'inline-block';
-                                    } else {
-                                        preview<?php echo $c; ?>.src = '<?php echo  $dominio; ?>/app/imagens/site/sem_imagem.png';
-                                        preview<?php echo $c; ?>.style.display = 'inline-block';
-                                    }
-                                }
-                            <?php } ?>
-                        }
-                    <?php } ?>
-                <?php } ?>
-
-                const pkElement = document.getElementById('<?php echo $pk; ?>');
-                if (pkElement) {
-                    pkElement.value = d['<?php echo $pk; ?>'];
-                }
-
-                new bootstrap.Modal(modalEl).show();
-            }
-
-            function salvarAjax() {
-
-                const form = document.getElementById('formCrud');
-                const formData = new FormData(form);
-
-                $.ajax({
-                    url: '<?php echo $link . '/' . $pag; ?>/salvar',
-                    method: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json',
-
-                    success: function(resp) {
-                        console.log(resp);
-
-                        if (resp.status === 'ok') {
-                            $('#modalForm').modal('hide');
-                            $('#menssagem_dados').html('<div class="alert alert-success alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-check-fill"></i><strong> Sucesso </strong> Dados salvo com sucesso!</div>');
-                            setTimeout(function() {
-                                if (!modalEl.classList.contains('editando')) {
-                                    location.reload();
-                                } else {
-                                    window.location.replace('<?php echo $link . '/' . $paginas . '/' . $busca; ?>');
-                                }
-                            }, 3000);
-                        } else {
-                            $('#modalForm').modal('hide');
-                            $('#menssagem_dados').html('<div class="alert alert-danger alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-error-warning-line"></i><strong> Erro </strong> ' + resp.msg + '</div>');
-                            console.log(resp.sql);
-                        }
-                    },
-
-                    error: function(xhr) {
-                        console.log(xhr.responseText);
-                        $('#modalForm').modal('hide');
-                        $('#menssagem_dados').html('<div class="alert alert-danger alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-error-warning-line"></i><strong> Erro </strong> fatal no PHP</div>');
-                    }
-                });
-                setTimeout(function() {
-                    $('#alertAuto').fadeOut(400, function() {
-                        $(this).remove();
-                    });
-                }, 5000);
-            }
-
-            $(document).on('click', '.btn-deletarDados', function() {
-                let id = $(this).data('id');
-                $('#btnDeleteDados').html('<button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right btnExcluirDados" data-id="' + id + ' title="Excluir"><strong>Excluír</strong></button>');
-
-            });
-
-
-            $(document).on('click', '.btnExcluirDados', function() {
-
-                let id = $(this).data('id');
-
-                $.ajax({
-                    url: '<?php echo $link . '/' . $pag; ?>/excluir',
-                    type: 'POST',
-                    data: {
-                        id,
-                    },
-                    success: function(resp) {
-                        $('#modalDeleteDados').modal('hide');
-                        $('#menssagem_dados').html('<div class="alert alert-success alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-check-fill"></i><strong> Sucesso </strong> Excluído com sucesso!</div>');
-                        setTimeout(function() {
-                            location.reload();
-                        }, 3000);
-                    },
-                    error: function() {
-                        $('#modalDeleteDados').modal('hide');
-                        $('#menssagem_dados').html('<div class="alert alert-danger alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-error-warning-line"></i><strong> Erro </strong> Não foi possível excluir o registro</div>');
-                    }
-
-                });
-
-                setTimeout(function() {
-                    $('#alertAuto').fadeOut(400, function() {
-                        $(this).remove();
-                    });
-                }, 5000);
-
-            });
-        </script>
-
 <?php
+        include '../imagem.php';
     }
 }
+?>
+<script src="<?php echo $dominio ?>/app/plugins/js/mask/masks.js"></script>
+
+<script>
+    const modalEl = document.getElementById('modalForm');
+    modalEl.addEventListener('show.bs.modal', function(event) {
+        if (!modalEl.classList.contains('editando')) {
+            const inputs = modalEl.querySelectorAll('input, textarea, select');
+            inputs.forEach(el => {
+                if (el.type === 'checkbox') {
+                    el.checked = false;
+                } else if (el.type === 'radio') {
+                    el.checked = false;
+                } else {
+                    el.value = '';
+                }
+            });
+            const previews = modalEl.querySelectorAll('img[id^="preview_"]');
+            previews.forEach(img => {
+                img.src = '<?php echo $dominio; ?>/app/imagens/site/sem_imagem.png';
+                img.style.display = 'none';
+            });
+            document.getElementById('<?php echo $pk; ?>').value = '';
+        }
+        modalEl.classList.remove('editando');
+    });
+
+    function editar(d) {
+        modalEl.classList.add('editando');
+        const inputs = modalEl.querySelectorAll('input, textarea, select');
+        inputs.forEach(el => {
+            if (el.type === 'checkbox') {
+                el.checked = false;
+            } else if (el.type === 'radio') {
+                el.checked = false;
+            } else {
+                el.value = '';
+            }
+        });
+        <?php foreach ($campos as $c) { ?>
+            <?php if (isset($cm[$c]['cmascara']) && $cm[$c]['cmascara'] == 'escolha') { ?>
+
+                const radios<?php echo $c; ?> = document.getElementsByName('<?php echo $c; ?>');
+                const valorRadio<?php echo $c; ?> = d['<?php echo $c; ?>'] || '';
+
+                for (let i = 0; i < radios<?php echo $c; ?>.length; i++) {
+                    if (radios<?php echo $c; ?>[i].value === valorRadio<?php echo $c; ?>) {
+                        radios<?php echo $c; ?>[i].checked = true;
+                        break;
+                    }
+                }
+
+            <?php } else { ?>
+                const element<?php echo $c; ?> = document.getElementById('<?php echo $c; ?>');
+
+                if (element<?php echo $c; ?>) {
+                    if (element<?php echo $c; ?>.type === 'checkbox') {
+                        element<?php echo $c; ?>.checked = d['<?php echo $c; ?>'] == 1;
+                    } else {
+
+                        function formatarMoeda(valor) {
+                            let str = valor;
+                            if (typeof str !== 'string') return str;
+                            return str.replace(/\./g, ',');
+                        }
+
+                        function formatarData(valor) {
+                            let str = valor;
+                            if (typeof str !== 'string') return str;
+                            const partes = str.split('-');
+                            if (partes.length !== 3) return str;
+                            return `${partes[2].padStart(2, '0')}/${partes[1].padStart(2, '0')}/${partes[0]}`;
+                        }
+
+                        function formatarDataHora(valor) {
+                            let str = valor;
+                            if (typeof str !== 'string') return str;
+                            const [data, hora] = str.split(' ');
+                            const partes = data.split('-');
+                            if (partes.length !== 3) return str;
+                            return `${partes[2].padStart(2, '0')}/${partes[1].padStart(2, '0')}/${partes[0]} ${hora || ''}`;
+                        }
+
+                        let valorFinal = d['<?php echo $c; ?>'] || '';
+
+                        <?php if ($classes[$c] == 'money') { ?>
+                            valorFinal = formatarMoeda(valorFinal);
+                        <?php } elseif ($classes[$c] == 'money2') { ?>
+                            valorFinal = formatarMoeda(valorFinal);
+                        <?php } elseif ($classes[$c] == 'data') { ?>
+                            valorFinal = formatarData(valorFinal);
+                        <?php } elseif ($classes[$c] == 'data_hora') { ?>
+                            valorFinal = formatarDataHora(valorFinal);
+                        <?php } ?>
+
+                        element<?php echo $c; ?>.value = valorFinal;
+                    }
+
+                    <?php if (isset($cm[$c]['cmascara']) && $cm[$c]['cmascara'] === 'imagem') { ?>
+                        const preview<?php echo $c; ?> = document.getElementById('preview_<?php echo $c; ?>');
+
+                        if (preview<?php echo $c; ?>) {
+                            const val = d['<?php echo $c; ?>'] || '';
+                            if (val) {
+                                preview<?php echo $c; ?>.src = '<?php echo  $dominio; ?>/app/imagens/uploads/' + val;
+                                preview<?php echo $c; ?>.style.display = 'inline-block';
+                            } else {
+                                preview<?php echo $c; ?>.src = '<?php echo  $dominio; ?>/app/imagens/site/sem_imagem.png';
+                                preview<?php echo $c; ?>.style.display = 'inline-block';
+                            }
+                        }
+                    <?php } ?>
+                }
+            <?php } ?>
+        <?php } ?>
+
+        const pkElement = document.getElementById('<?php echo $pk; ?>');
+        if (pkElement) {
+            pkElement.value = d['<?php echo $pk; ?>'];
+        }
+
+        new bootstrap.Modal(modalEl).show();
+    }
+
+    function salvarAjax() {
+
+        const form = document.getElementById('formCrud');
+        const formData = new FormData(form);
+
+        $.ajax({
+            url: '<?php echo $link . '/' . $pag; ?>/salvar',
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+
+            success: function(resp) {
+                console.log(resp);
+
+                if (resp.status === 'ok') {
+                    $('#modalForm').modal('hide');
+                    $('#menssagem_dados').html('<div class="alert alert-success alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-check-fill"></i><strong> Sucesso </strong> Dados salvo com sucesso!</div>');
+                    setTimeout(function() {
+                        if (!modalEl.classList.contains('editando')) {
+                            location.reload();
+                        } else {
+                            window.location.replace('<?php echo $link . '/' . $paginas . '/' . $busca; ?>');
+                        }
+                    }, 3000);
+                } else {
+                    $('#modalForm').modal('hide');
+                    $('#menssagem_dados').html('<div class="alert alert-danger alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-error-warning-line"></i><strong> Erro </strong> ' + resp.msg + '</div>');
+                    console.log(resp.sql);
+                }
+            },
+
+            error: function(xhr) {
+                console.log(xhr.responseText);
+                $('#modalForm').modal('hide');
+                $('#menssagem_dados').html('<div class="alert alert-danger alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-error-warning-line"></i><strong> Erro </strong> fatal no PHP</div>');
+            }
+        });
+        setTimeout(function() {
+            $('#alertAuto').fadeOut(400, function() {
+                $(this).remove();
+            });
+        }, 5000);
+    }
+
+    $(document).on('click', '.btn-deletarDados', function() {
+        let id = $(this).data('id');
+        $('#btnDeleteDados').html('<button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right btnExcluirDados" data-id="' + id + ' title="Excluir"><strong>Excluír</strong></button>');
+
+    });
+
+
+    $(document).on('click', '.btnExcluirDados', function() {
+
+        let id = $(this).data('id');
+
+        $.ajax({
+            url: '<?php echo $link . '/' . $pag; ?>/excluir',
+            type: 'POST',
+            data: {
+                id,
+            },
+            success: function(resp) {
+                $('#modalDeleteDados').modal('hide');
+                $('#menssagem_dados').html('<div class="alert alert-success alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-check-fill"></i><strong> Sucesso </strong> Excluído com sucesso!</div>');
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
+            },
+            error: function() {
+                $('#modalDeleteDados').modal('hide');
+                $('#menssagem_dados').html('<div class="alert alert-danger alert-dismissible fade show" id="alertAuto" role="alert" data-pg-collapsed><i class="ri-error-warning-line"></i><strong> Erro </strong> Não foi possível excluir o registro</div>');
+            }
+
+        });
+
+        setTimeout(function() {
+            $('#alertAuto').fadeOut(400, function() {
+                $(this).remove();
+            });
+        }, 5000);
+
+    });
+</script>
+
+<?php
 include 'rodape.php';
 ?>
